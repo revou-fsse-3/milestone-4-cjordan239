@@ -3,7 +3,7 @@ from connectors.mysql_connectors import Session
 from models.Users import User
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import select, or_
-from flask_login import current_user, login_required, login_user
+from flask_login import current_user, login_required, login_user, logout_user
 from connectors.mysql_connectors import engine
 
 users_routes = Blueprint('users_routes', __name__)
@@ -69,11 +69,21 @@ def login_func_user():
             return {"message": 'password salah'}
         
         login_user(user, remember=False)
-        return redirect("/")
+        return redirect("/users/landingpage")
     
     except Exception as e:
         print(e)
         return { "message": "Login Failed"}
+
+@users_routes.route('/users/landingpage')
+@login_required
+def landingpage():
+    return render_template('users/landingpage.html', username=current_user.username)
+
+@users_routes.route("/logout", methods=['GET'])
+def do_user_logout():
+    logout_user()
+    return redirect('/users/login')
 
 
         
