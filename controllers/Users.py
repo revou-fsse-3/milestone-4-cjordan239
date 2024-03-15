@@ -86,4 +86,37 @@ def do_user_logout():
     return redirect('/users/login')
 
 
+
+@users_routes.route("/users/landingpage/changepassword", methods=['GET', 'POST'])
+@login_required
+def update_profile():
+    new_username = request.form.get('username')
+    new_password = request.form.get('password')
+    session = Session()
+
+    try:
+        user = session.query(User).filter_by(user_id=current_user.user_id).first()
+
+        if user.check_password(request.form.get('old_password')):
+            user.username = new_username
+            user.set_password(new_password)
+
+            session.commit()
+            return redirect('/logout')
+        else:
+            return { "message": "Incorrect old password" }, 400
+
+    except Exception as e:
+        print(e)
+        return { "message": "Failed to update profile" }, 500
+
+@users_routes.route("/changepass", methods=['GET'])
+def landing_page_profile():
+    return render_template("users/profile.html", username=current_user.username)
+    
+
+
+
+
+
         

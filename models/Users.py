@@ -6,7 +6,7 @@ from flask_login import UserMixin
 import bcrypt
 
 class User(Base, UserMixin):
-    __tablename__ = 'Users'
+    __tablename__ = 'users'
 
     user_id = mapped_column(Integer, primary_key=True, autoincrement=True)
     username = mapped_column(String(100), nullable=False, unique=True)
