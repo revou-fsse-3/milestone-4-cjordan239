@@ -57,9 +57,7 @@
     <div class="container">
         <h1>Create Account</h1>
         <form action="{{ url_for('accounts_routes.create_account') }}" method="POST">
-            <label for="user_id">User ID:</label>
-            <input type="text" id="user_id" name="user_id" required>
-            
+                    
             <label for="account_type">Account Type:</label>
             <select id="account_type" name="account_type" required>
                 <option value="savings">Savings</option>

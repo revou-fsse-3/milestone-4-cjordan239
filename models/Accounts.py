@@ -1,6 +1,7 @@
 from sqlalchemy import Integer, String, DECIMAL, DateTime, func, ForeignKey
 from sqlalchemy.orm import mapped_column, relationship
 from sqlalchemy.ext.declarative import declarative_base
+from models.Users import User
 
 Base = declarative_base()
 
@@ -15,4 +16,4 @@ class Account(Base):
     created_at = mapped_column(DateTime, server_default=func.now())
     updated_at = mapped_column(DateTime, server_default=func.now(), onupdate=func.now())
 
-    users= relationship("User", cascade="all,delete-orphan")
+    users = relationship("User", backref="accounts")
